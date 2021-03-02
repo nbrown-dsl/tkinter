@@ -79,6 +79,7 @@ def edit():
  
     # Create Text Boxes
     time_editor = Entry(editor, width=30)
+    time_editor.grid(row=2, column=1)
     
     state_editor = Entry(editor, width=30)
     state_editor.grid(row=4, column=1)
@@ -86,7 +87,7 @@ def edit():
     
     # Create Text Box Labels
     time_label = Label(editor, text="Time")
-    
+    time_label.grid(row=1, column=0)
     
     state_label = Label(editor, text="Student")
     state_label.grid(row=4, column=0)
@@ -95,11 +96,7 @@ def edit():
     # Loop thru results 
     for record in records:
         time_editor.insert(0, record[0])
-        
-        
         state_editor.insert(0, record[1])
-        
- 
     
     # Create a Save Button To Save edited record
     edit_btn = Button(editor, text="Save time", command=update)
@@ -127,15 +124,13 @@ def delete():
     # Create cursor
     c = conn.cursor()
  
-    # Delete a record
+    # Delete a record with id entered 
     c.execute("DELETE from time WHERE oid = " + delete_box.get())
  
     delete_box.delete(0, END)
  
-    #Commit Changes
+    
     conn.commit()
- 
-    # Close Connection 
     conn.close()
  
 # Create Submit Function For database
@@ -150,15 +145,10 @@ def submit():
             {
                 'time': time.get(),
                 
-                'state': clickedWorkplace.get()
-                
+                'state': clickedWorkplace.get()               
             })
  
- 
-    #Commit Changes
     conn.commit()
- 
-    # Close Connection 
     conn.close()
  
     # Clear The Text Boxes
@@ -207,16 +197,13 @@ def query():
     # Loop Thru Results
     print_records = ''
     for record in records:
-        print_records += str(record[0]) + " " + str(record[1]) + " " + "\t" +str(record[7]) + "\n"
-        
+        print_records += str(record[2]) + "   "  + str(record[0]) + "   " + str(record[1]) + "\n"
+        print (record)    
  
     query_label = Label(root, text=print_records)
     query_label.grid(row=14, column=0, columnspan=2)
  
-    #Commit Changes
     conn.commit()
- 
-    # Close Connection 
     conn.close()
  
 def submitWorkSpace():
@@ -313,6 +300,7 @@ delete_box.grid(row=9, column=1, pady=5)
  
 # Create Text Box Labels
 time_label = Label(root, text="time")
+time_label.grid(row=0, column=0)
 
 state_label = Label(root, text="Student")
 state_label.grid(row=4, column=0)
